@@ -10,7 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddGrpc();
 
 string connectionString = builder.Configuration.GetConnectionString("SQLServer");
-builder.Services.AddDbContext(connectionString);
+builder.Services.RegisterInfrastructureServices(connectionString);
 
 var app = builder.Build();
 

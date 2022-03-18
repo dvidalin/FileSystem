@@ -1,0 +1,3 @@
+﻿CREATE LOGIN [app_user]
+    WITH PASSWORD = N'E0dne4tbcimf$rodqml_qlRdmsFT7_&#$!~<jb&cegeM.l8u', SID = 0x1AD5A9A728B1B9409E649DEF014E5639, DEFAULT_DATABASE = [FileSystem], DEFAULT_LANGUAGE = [us_english], CHECK_POLICY = OFF;
+

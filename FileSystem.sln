@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.1.32228.430
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileSystem.GrpcServer", "FileSystem.GrcpServer\FileSystem.GrpcServer.csproj", "{B48BEDDF-7D01-4743-B32E-4E30A257B145}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FileSystem.GrpcServer", "FileSystem.GrcpServer\FileSystem.GrpcServer.csproj", "{B48BEDDF-7D01-4743-B32E-4E30A257B145}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Source", "Source", "{E747007C-9F6C-485F-B67B-34D04722A0E5}"
 EndProject
@@ -16,6 +16,10 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FileSystem.App", "FileSystem.App\FileSystem.App.csproj", "{E3A8EBC6-76E4-41FD-A2EA-C5AAC2D17897}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FileSystem.GrpcClient", "FileSystem.GrpcClient\FileSystem.GrpcClient.csproj", "{65F09A00-23B4-4FFA-B746-2ED28573EEAC}"
+EndProject
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "FileSystem.SqlServer", "FileSystem.SqlServer\FileSystem.SqlServer.sqlproj", "{FF56935D-D446-4010-9CD4-34467BCEAC3C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileSystem.EF", "FileSystem.EF\FileSystem.EF.csproj", "{B3FC1957-A6C4-436F-831D-F0ACF5BAB73A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -43,6 +47,16 @@ Global
 		{65F09A00-23B4-4FFA-B746-2ED28573EEAC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{65F09A00-23B4-4FFA-B746-2ED28573EEAC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{65F09A00-23B4-4FFA-B746-2ED28573EEAC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FF56935D-D446-4010-9CD4-34467BCEAC3C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FF56935D-D446-4010-9CD4-34467BCEAC3C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FF56935D-D446-4010-9CD4-34467BCEAC3C}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{FF56935D-D446-4010-9CD4-34467BCEAC3C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FF56935D-D446-4010-9CD4-34467BCEAC3C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FF56935D-D446-4010-9CD4-34467BCEAC3C}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{B3FC1957-A6C4-436F-831D-F0ACF5BAB73A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B3FC1957-A6C4-436F-831D-F0ACF5BAB73A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B3FC1957-A6C4-436F-831D-F0ACF5BAB73A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B3FC1957-A6C4-436F-831D-F0ACF5BAB73A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -53,6 +67,8 @@ Global
 		{1D60B7EB-80B0-4773-8433-3E87B20D73F0} = {E747007C-9F6C-485F-B67B-34D04722A0E5}
 		{E3A8EBC6-76E4-41FD-A2EA-C5AAC2D17897} = {E747007C-9F6C-485F-B67B-34D04722A0E5}
 		{65F09A00-23B4-4FFA-B746-2ED28573EEAC} = {E747007C-9F6C-485F-B67B-34D04722A0E5}
+		{FF56935D-D446-4010-9CD4-34467BCEAC3C} = {E747007C-9F6C-485F-B67B-34D04722A0E5}
+		{B3FC1957-A6C4-436F-831D-F0ACF5BAB73A} = {E747007C-9F6C-485F-B67B-34D04722A0E5}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {09CA7404-D36A-4BDD-8790-4D0FBF961CE7}

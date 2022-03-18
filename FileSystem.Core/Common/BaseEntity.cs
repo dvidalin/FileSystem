@@ -9,7 +9,6 @@ namespace FileSystem.Core.Common
     public abstract class BaseEntity<TId>
     {
         public TId Id { get; set; }
-        public DateTime DateCreated { get; set; } = DateTime.UtcNow;
-        public bool IsDeleted { get; set; } = false;
+        public string Name { get; set; }
     }
 }

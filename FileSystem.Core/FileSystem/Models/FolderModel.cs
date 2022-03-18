@@ -9,7 +9,6 @@ namespace FileSystem.Core.FileSystem.Models
 {
     public  class FolderModel : BaseEntity<int>
     {
-        public string Name { get; set; }
         public List<FolderModel> SubFolders { get; set; } = new List<FolderModel>();
         public List<FileModel> Files { get; set; } = new List<FileModel>();
     }

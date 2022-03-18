@@ -1,21 +1,23 @@
-﻿using FileSystem.Infrastructure.Data;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
-
+using FileSystem.Core.Interfaces;
+using FileSystem.EF;
 
 namespace FileSystem.Infrastructure
 {
     public static class ServiceCollectionExtensions
     {
-        public static void AddDbContext(this IServiceCollection services, string connectionString)
+        public static void RegisterInfrastructureServices(this IServiceCollection services, string connectionString)
         {
-            services.AddDbContext<AppDbContext>(options =>
-                options.UseSqlServer(connectionString,
-                    x => x.MigrationsAssembly("FileSystem.Infrastructure")
-                    )
+            services.AddDbContext<FileSystemDbContext>(options =>
+                options.UseSqlServer(connectionString, conf => 
+                    conf.UseHierarchyId()    
+                )
             );
+
+            services.AddScoped<IFolderRepository, FolderRepository>();
         }
 
-        
+
     }
 }

@@ -9,7 +9,6 @@ namespace FileSystem.Core.FileSystem.Models
 {
     public class FileModel : BaseEntity<int>
     {
-        public string Name { get; set; }
 
     }
 }
