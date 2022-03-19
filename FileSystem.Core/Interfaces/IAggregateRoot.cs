@@ -1,6 +1,5 @@
-﻿namespace FileSystem.Core.Interfaces
+﻿namespace FileSystem.Core.Interfaces;
+
+public interface IAggregateRoot
 {
-    public interface IAggregateRoot
-    {
-    }
 }

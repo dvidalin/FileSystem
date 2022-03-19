@@ -4,11 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FileSystem.Core.Interfaces
+namespace FileSystem.Core.Interfaces;
+
+public interface IBaseEntity<Tid>
 {
-    public interface IBaseEntity<Tid>
-    {
-        Tid Id { get; set; }
-        string Name { get; set; }
-    }
+    Tid Id { get; set; }
+    string Name { get; set; }
 }

@@ -1,7 +1,6 @@
-﻿namespace FileSystem.App
-{
-    public class Class1
-    {
+﻿namespace FileSystem.App;
 
-    }
+public class Class1
+{
+
 }

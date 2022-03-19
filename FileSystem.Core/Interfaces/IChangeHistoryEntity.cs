@@ -4,11 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FileSystem.Core.Interfaces
+namespace FileSystem.Core.Interfaces;
+
+public interface IChangeHistoryEntity
 {
-    public interface IChangeHistoryEntity
-    {
-        DateTime DateCreated { get; set; }
-        DateTime DateModified { get; set; }
-    }
+    DateTime DateCreated { get; set; }
+    DateTime DateModified { get; set; }
 }

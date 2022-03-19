@@ -1,7 +1,6 @@
-﻿namespace FileSystem.Core
-{
-    public class Class1
-    {
+﻿namespace FileSystem.Core;
 
-    }
+public class Class1
+{
+
 }
