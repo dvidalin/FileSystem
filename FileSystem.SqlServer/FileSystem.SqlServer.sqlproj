@@ -63,8 +63,9 @@
     <Folder Include="Security\" />
   </ItemGroup>
   <ItemGroup>
-    <Build Include="dbo\Tables\FolderOrg.sql" />
+    <Build Include="dbo\Tables\Folders.sql" />
     <Build Include="Security\app_user.sql" />
     <Build Include="Security\app_user_1.sql" />
+    <Build Include="dbo\Tables\Files.sql" />
   </ItemGroup>
 </Project>

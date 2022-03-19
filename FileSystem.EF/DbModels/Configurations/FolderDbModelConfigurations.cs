@@ -12,7 +12,13 @@ namespace FileSystem.EF.DbModels.Configurations
     {
         public void Configure(EntityTypeBuilder<FolderDbModel> builder)
         {
-            builder.ToTable("FolderOrg");
+            
+            builder.ToTable("Folders");
+
+            builder.HasOne(f => f.Parent)
+                .WithMany(f => f.Subfolders)
+                .HasForeignKey(f => f.ParentId)
+                .IsRequired(false);
 
             builder.HasKey(x => x.Id);
 
@@ -24,7 +30,17 @@ namespace FileSystem.EF.DbModels.Configurations
 
             builder.Property(x => x.Name)
                 .HasMaxLength(32);
-                
+
+            builder.HasMany(x => x.Files)
+                .WithOne(x => x.ParentFolder)
+                .HasForeignKey(x => x.ParentFolderId);
+
+            SetQueryFilters(builder);
+        }
+
+        private void SetQueryFilters(EntityTypeBuilder<FolderDbModel> builder)
+        {
+            builder.HasQueryFilter(f => !f.IsDeleted);
         }
     }
 }

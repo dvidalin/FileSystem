@@ -15,7 +15,7 @@ namespace FileSystem.Infrastructure
                 )
             );
 
-            services.AddScoped<IFolderRepository, FolderRepository>();
+            services.AddScoped<IFileSystemService, FileSystemService>();
         }
 
 
