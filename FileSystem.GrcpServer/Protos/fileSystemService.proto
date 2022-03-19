@@ -1,0 +1,52 @@
+syntax = "proto3";
+
+option csharp_namespace = "FileSystem.GrpcServer";
+
+package fileserver;
+
+service FileServer {
+	rpc GetAll(Empty) returns (GetAllReply);
+	rpc AddFolder(AddRequest) returns (Empty);
+	rpc RemoveFolderById(IdRequest) returns (Empty);
+	rpc AddFile(AddRequest) returns (FileReply);
+	rpc FileLookup(LookupRequest) returns (LookupReply);
+}
+
+message IdRequest {
+	int32 id = 1;
+}
+
+message AddRequest {
+	string name = 1;
+	int32 parentFolderId = 2;
+}
+
+message FolderReply {
+	int32 id = 1;
+	string name = 2;
+	int32 parentFolderId = 3;
+	repeated FolderReply subfolders = 4;
+	repeated FileReply files = 5;
+}
+
+message FileReply {
+	int32 id = 1;
+	string name = 2;
+	int32 parentFolderId = 3;
+}
+
+message Empty{}
+
+message GetAllReply {
+	repeated FolderReply Folders = 1;
+}
+
+message LookupRequest {
+	string searchString = 1;
+	int32 page = 2;
+	int32 size = 3;
+}
+
+message LookupReply {
+	repeated FileReply files = 1;
+}

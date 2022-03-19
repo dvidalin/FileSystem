@@ -19,7 +19,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FileSystem.GrpcClient", "Fi
 EndProject
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "FileSystem.SqlServer", "FileSystem.SqlServer\FileSystem.SqlServer.sqlproj", "{FF56935D-D446-4010-9CD4-34467BCEAC3C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileSystem.EF", "FileSystem.EF\FileSystem.EF.csproj", "{B3FC1957-A6C4-436F-831D-F0ACF5BAB73A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FileSystem.EF", "FileSystem.EF\FileSystem.EF.csproj", "{B3FC1957-A6C4-436F-831D-F0ACF5BAB73A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

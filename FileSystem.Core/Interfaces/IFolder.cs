@@ -8,6 +8,8 @@ namespace FileSystem.Core.Interfaces
 {
     public interface IFolder : IBaseEntity<int>
     {
+        short Level { get; set; }
+        int? ParentId { get; set; }
         IFolder AddSubfolder(string name);
         void Delete();
         void  DeleteSubFolderById(int subfolderId);
