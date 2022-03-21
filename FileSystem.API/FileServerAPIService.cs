@@ -7,27 +7,28 @@ using FileSystem.EF.DbModels;
 namespace FileSystem.API;
 public class FileServerAPIService : IFileServerAPIService
 {
-    private readonly IFileServerRepository<FolderDbModel, FileDbModel> _fileServerRepository;
+    private readonly IFileServerRepository _fileServerRepository;
 
-    public FileServerAPIService(IFileServerRepository<FolderDbModel, FileDbModel> fileServerRepository)
+    public FileServerAPIService(IFileServerRepository fileServerRepository)
     {
         _fileServerRepository = fileServerRepository;
     }
 
-    public async Task<IFile> AddFileAsync(string fileName, int parentFolderId) { 
+    public async Task<int> AddFileAsync(string fileName, int parentFolderId) { 
         var parentFolder = await _fileServerRepository.GetFolderByIdAsync(parentFolderId);
 
-        var fileToCreate = parentFolder.CreateFile(fileName);
+        var newFile = parentFolder.CreateFile(fileName);
 
-        return await _fileServerRepository.AddFileAsync((FileDbModel)fileToCreate);
+        return await _fileServerRepository.AddFileAsync(newFile);
+
     }
 
-    public async Task AddFolderAsync(string folderName, int parentFolderId) {
+    public async Task<int> AddFolderAsync(string folderName, int parentFolderId) {
         var parentFolder = await _fileServerRepository.GetFolderWithDeletedChildredByIdAsync(parentFolderId);
 
         var folderToAdd = parentFolder.AddSubfolder(folderName);
 
-        await _fileServerRepository.AddFolderAsync(folderToAdd);
+        return await _fileServerRepository.AddFolderAsync(folderToAdd);
     }
 
     public async Task<PaginationResponse<IFile>> FileLookupAsync(PaginationRequest request)

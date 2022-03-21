@@ -18,7 +18,7 @@ public static class ServiceCollectionExtensions
             )
         );
 
-        services.AddScoped(typeof(IFileServerRepository<FolderDbModel, FileDbModel>), typeof(FileServerRepository));
+        services.AddScoped(typeof(IFileServerRepository), typeof(FileServerRepository));
 
     }
 

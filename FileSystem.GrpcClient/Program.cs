@@ -9,10 +9,10 @@ var client = new FileServer.FileServerClient(channel);
 
 //foreach (var folder in reply.Folders)
 //{
-var t = await client.FileLookupAsync(new LookupRequest { SearchString = "Moj", Page = 1, Size = 10 });
+//var t = await client.FileLookupAsync(new LookupRequest { SearchString = "Moj", Page = 1, Size = 10 });
 //}
 
-//await client.AddFolderAsync(new AddRequest { Name = "Folder iz klijenta", ParentFolderId = 1 });
+await client.AddFolderAsync(new AddRequest { Name = "Folder iz novi novi", ParentFolderId = 1 });
 
 
 //for (var i = 0; i < 20; i++)

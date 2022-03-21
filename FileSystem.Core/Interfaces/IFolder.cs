@@ -5,6 +5,6 @@ public interface IFolder : IBaseEntity<int>
     void Delete();
     IFile CreateFile(string fileName);
     void DeleteFile(IFile file);
-    IParentFolder<IFolder> AddSubfolder(string name);
+    IFolder AddSubfolder(string name);
 
 }

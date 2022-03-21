@@ -2,19 +2,18 @@
 using FileSystem.Core.Interfaces;
 
 namespace FileSystem.Core.FileSystem.Interfaces;
-public interface IFileServerRepository<TFolder, TFile>
-    where TFolder : IFolder
-    where TFile : IFile
+public interface IFileServerRepository
 {
-    Task<IEnumerable<TFolder>> GetAllAsync();
-    Task<TFolder> GetFolderByIdAsync(int folderId);
-    Task<TFolder> GetFolderWithDeletedChildredByIdAsync(int folderId);
-    Task AddFolderAsync(TFolder folder);
-    Task<TFile> AddFileAsync(TFile file);
-    Task<PaginationResponse<TFile>> GetFilesPaginatedAsync(PaginationRequest request);
-    Task UpdateFolderAsync(TFolder folder);
-    Task UpdateFileAsync(TFile item);
-    Task<TFile> GetFileByIdAsync(int fileId);
+    Task<IEnumerable<IFolder>> GetAllAsync();
+    Task<IFolder> GetFolderByIdAsync(int folderId);
+    Task<IFolder> GetFolderWithDeletedChildredByIdAsync(int folderId);
+    Task<int> AddFolderAsync(IFolder folder);
+    Task<int> AddFileAsync(IFile file);
+    Task<PaginationResponse<IFile>> GetFilesPaginatedAsync(PaginationRequest request);
+    Task UpdateFolderAsync(IFolder folder);
+    Task UpdateFileAsync(IFile item);
+    Task<IFile> GetFileByIdAsync(int fileId);
+
 
 
 }

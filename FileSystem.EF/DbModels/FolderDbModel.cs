@@ -20,21 +20,22 @@ public partial class FolderDbModel : ChildFolder, IParentFolder<FolderDbModel>
 
     public FolderDbModel()
     {
-
-    }
-
-    public FolderDbModel(string folderName)
-    {
-
-        Name = Guard.Against.NullOrWhiteSpace(folderName, nameof(folderName));
         Subfolders = new List<FolderDbModel>();
         Files = new List<FileDbModel>();
     }
+    public FolderDbModel(string folderName, HierarchyId node)
+        :this()
+    {
+        Name = Guard.Against.NullOrWhiteSpace(folderName, nameof(folderName));
+        Node = node;
+    }
     public override string ToString() => $"ID: {Id} Path: {Node}";
 
-    public new FolderDbModel AddSubfolder(string folderName)
+    public override FolderDbModel AddSubfolder(string folderName)
     {
-        var newFolder = new FolderDbModel(folderName);
+        HierarchyId newNode = GetNewChildNode();
+        var newFolder = new FolderDbModel(folderName, newNode);
+        
         Subfolders.Add(newFolder);
         return newFolder;
     }
@@ -62,7 +63,7 @@ public partial class FolderDbModel : ChildFolder, IParentFolder<FolderDbModel>
         }
     }
 
-    public override IFile CreateFile(string fileName)
+    public override FileDbModel CreateFile(string fileName)
     {
         FileDbModel newFile = new(fileName, this);
         Files.Add(newFile);
@@ -74,7 +75,10 @@ public partial class FolderDbModel : ChildFolder, IParentFolder<FolderDbModel>
         FileDbModel fileToDelete = Files.FirstOrDefault(f => f.Equals(file));
         fileToDelete?.Delete();
     }
+
     private HierarchyId GetNewChildNode() => Node.GetDescendant(GetMaxChildNode(), null);
 
     private HierarchyId? GetMaxChildNode() => Subfolders.Max(sf => sf.Node);
+
+
 }

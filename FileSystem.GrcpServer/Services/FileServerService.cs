@@ -23,26 +23,26 @@ public class FileServerService : FileServer.FileServerBase
         return Task.FromResult(new GetAllReply());
     }
 
-    public override async Task<Empty> AddFolder(AddRequest request, ServerCallContext context)
+    public override async Task<IdMessage> AddFolder(AddRequest request, ServerCallContext context)
     {
-        await _fileServerService.AddFolderAsync(request.Name, request.ParentFolderId);
+        int newFolderId = await _fileServerService.AddFolderAsync(request.Name, request.ParentFolderId);
 
-        return new ();
+        return new() { Id = newFolderId};
 
     }
 
-    public override async Task<Empty> RemoveFolderById(IdRequest request, ServerCallContext context)
+    public override async Task<Empty> RemoveFolderById(IdMessage request, ServerCallContext context)
     {
         await _fileServerService.RemoveFolderByIdAsync(request.Id);
 
         return new ();
     }
 
-    public override async Task<FileReply> AddFile(AddRequest request, ServerCallContext context)
+    public override async Task<IdMessage> AddFile(AddRequest request, ServerCallContext context)
     {
-        IFile newFile = await _fileServerService.AddFileAsync(request.Name, request.ParentFolderId);
+        int newFileId = await _fileServerService.AddFileAsync(request.Name, request.ParentFolderId);
 
-        return newFile.GetFileReply();
+        return new (){ Id = newFileId };
 
         
     }

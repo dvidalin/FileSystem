@@ -6,7 +6,7 @@ using FileSystem.EF.QueryStore;
 using Microsoft.EntityFrameworkCore;
 
 namespace FileSystem.EF;
-public class FileServerRepository : IFileServerRepository<FolderDbModel, FileDbModel>
+public class FileServerRepository : IFileServerRepository
 {
     private readonly FileSystemDbContext _dbContext;
 
@@ -15,32 +15,34 @@ public class FileServerRepository : IFileServerRepository<FolderDbModel, FileDbM
         _dbContext = dbContext;
     }
 
-    public async Task<FileDbModel> AddFileAsync(FileDbModel file)
+    public async Task<int> AddFileAsync(IFile file)
     {
-        _dbContext.Files.Add(file);
+        _dbContext.Files.Add((FileDbModel)file);
 
         await _dbContext.SaveChangesAsync();
 
-        return file;
+        return file.Id;
     }
-    public async Task AddFolderAsync(FolderDbModel folder)
+    public async Task<int> AddFolderAsync(IFolder folder)
     { 
-        _dbContext.Folders.Add(folder); 
+        _dbContext.Folders.Add((FolderDbModel)folder); 
 
         await _dbContext.SaveChangesAsync();
+
+        return folder.Id;
     }
 
-    public async Task<IEnumerable<FolderDbModel>> GetAllAsync()
+    public async Task<IEnumerable<IFolder>> GetAllAsync()
         => await _dbContext.Folders.ToListAsync();
-    public async Task<FileDbModel> GetFileByIdAsync(int fileId)     
+    public async Task<IFile> GetFileByIdAsync(int fileId)     
         => await _dbContext
                     .FilesQuery()
                     .ById(fileId)
                     .SingleAsync();
 
-    public async Task<PaginationResponse<FileDbModel>> GetFilesPaginatedAsync(PaginationRequest request)
+    public async Task<PaginationResponse<IFile>> GetFilesPaginatedAsync(PaginationRequest request)
     {
-        PaginationResponse<FileDbModel> response = new(request);
+        PaginationResponse<IFile> response = new(request);
 
         try
         {
@@ -63,13 +65,13 @@ public class FileServerRepository : IFileServerRepository<FolderDbModel, FileDbM
         return response;
 
     }
-    public async Task<FolderDbModel> GetFolderByIdAsync(int folderId)
+    public async Task<IFolder> GetFolderByIdAsync(int folderId)
         => await _dbContext
                     .FoldersQuery()
                     .ById(folderId)
                     .WithAllRelations()
                     .SingleAsync();
-    public async Task<FolderDbModel> GetFolderWithDeletedChildredByIdAsync(int folderId) 
+    public async Task<IFolder> GetFolderWithDeletedChildredByIdAsync(int folderId) 
         => await _dbContext
                     .FoldersQuery()
                     .IgnoreQueryFilters()
@@ -77,13 +79,13 @@ public class FileServerRepository : IFileServerRepository<FolderDbModel, FileDbM
                     .ById(folderId)                    
                     .WithAllRelations()
                     .SingleAsync();
-    public async Task UpdateFileAsync(FileDbModel item)
+    public async Task UpdateFileAsync(IFile item)
     { 
         _dbContext.Entry(item).State = EntityState.Modified;
         await _dbContext.SaveChangesAsync();
     }
 
-    public async Task UpdateFolderAsync(FolderDbModel folder)
+    public async Task UpdateFolderAsync(IFolder folder)
     { 
         _dbContext.Entry(folder).State = EntityState.Modified;
         await _dbContext.SaveChangesAsync();
