@@ -5,11 +5,15 @@ var channel = GrpcChannel.ForAddress("http://localhost:5098");
 
 var client = new FileServer.FileServerClient(channel);
 
-var reply = await client.GetAllAsync(new Empty());
+//GetAllReply reply = await client.GetAllAsync(new Empty());
+
+//foreach (var folder in reply.Folders)
+//{
+var t = await client.FileLookupAsync(new LookupRequest { SearchString = "Moj", Page = 1, Size = 10 });
+//}
 
 //await client.AddFolderAsync(new AddRequest { Name = "Folder iz klijenta", ParentFolderId = 1 });
 
-//await client.RemoveFolderByIdAsync(new IdRequest { Id = 2 });
 
 //for (var i = 0; i < 20; i++)
 //{
@@ -17,7 +21,6 @@ var reply = await client.GetAllAsync(new Empty());
 
 //}
 
-var lookup = await client.FileLookupAsync(new LookupRequest { Page = 1, SearchString = "Fil", Size = 10 });
 
 Console.WriteLine("Done!!!");
 Console.ReadLine();

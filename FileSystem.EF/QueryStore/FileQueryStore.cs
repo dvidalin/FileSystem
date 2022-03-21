@@ -12,7 +12,7 @@ public static class FileQueryStore
     public static IQueryable<FileDbModel> WithParentFolder(this IQueryable<FileDbModel> query)
         => query.Include(f => f.ParentFolder);
 
-    public static IQueryable<FileDbModel> NameStartsWith(this IQueryable<FileDbModel> query, string searchString)
+    public static IQueryable<FileDbModel> SetSearchFilters(this IQueryable<FileDbModel> query, string searchString)
         => query.Where(f => f.Name.StartsWith(searchString));
 
     public static IQueryable<FileDbModel> ById(this IQueryable<FileDbModel> query, int id)

@@ -2,6 +2,9 @@
 using Microsoft.EntityFrameworkCore;
 using FileSystem.Core.Interfaces;
 using FileSystem.EF;
+using FileSystem.Core.FileSystem.Interfaces;
+using FileSystem.EF.DbModels;
+using System.Reflection;
 
 namespace FileSystem.Infrastructure;
 
@@ -15,7 +18,8 @@ public static class ServiceCollectionExtensions
             )
         );
 
-        services.AddScoped<IFileSystemService, FileSystemService>();
+        services.AddScoped(typeof(IFileServerRepository<FolderDbModel, FileDbModel>), typeof(FileServerRepository));
+
     }
 
 

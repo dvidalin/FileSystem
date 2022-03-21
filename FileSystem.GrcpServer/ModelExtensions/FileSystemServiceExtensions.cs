@@ -1,4 +1,5 @@
-﻿using FileSystem.Core.Interfaces;
+﻿using FileSystem.Core.Common;
+using FileSystem.Core.Interfaces;
 
 namespace FileSystem.GrpcServer.ModelExtensions;
 
@@ -8,16 +9,34 @@ public static class FileSystemServiceExtensions
         => new()
         { 
             Id = folder.Id,
-            Name = folder.Name,
-            ParentFolderId = folder.ParentId ?? -1
+            Name = folder.Name
         };
 
     public static FileReply GetFileReply(this IFile file)
         => new()
         {
             Id = file.Id,
-            Name = file.Name,
-            ParentFolderId = file.ParentFolderId
+            Name = file.Name
         };
+
+    public static PaginationRequest GetPaginationRequest(this LookupRequest request)
+        => new() {
+            SearchString = request.SearchString,
+            PageNumber = request.Page,
+            PageSize = request.Size
+        };
+
+    public static LookupReply GetResponse(this PaginationResponse<IFile> response)
+    {
+        LookupReply lookupReply = new() { 
+            PageNumber = response.PageNumber,
+            PageSize = response.PageSize,
+            TotalCount = response.TotalCount,
+            FilteredCount = response.FilteredCount
+        };
+        lookupReply.Files.AddRange(response.Items.Select(i => i.GetFileReply()));
+
+        return lookupReply;
+    }
 
 }

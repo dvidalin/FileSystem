@@ -14,7 +14,6 @@
 
   <ItemGroup>
     <Protobuf Include="Protos\fileSystemService.proto" GrpcServices="Server" />
-    <Protobuf Include="Protos\greet.proto" GrpcServices="Server" />
   </ItemGroup>
 
   <ItemGroup>
@@ -27,7 +26,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\FileSystem.Infrastructure\FileSystem.Infrastructure.csproj" />
+    <ProjectReference Include="..\FileSystem.API\FileSystem.API.csproj" />
   </ItemGroup>
 
 </Project>

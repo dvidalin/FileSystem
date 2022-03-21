@@ -11,6 +11,11 @@ public partial class FileDbModel : BaseEntity<int>, IFile, ISoftDeleteEntity, IC
     public DateTime DateCreated { get; set; } = DateTime.Now;
     public DateTime DateModified { get; set; } = DateTime.Now;
 
+    public FileDbModel()
+    {
+
+    }
+
     private FileDbModel(string name)
     { 
         Name = name;

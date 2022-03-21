@@ -1,10 +1,11 @@
-﻿using FileSystem.Core.Common;
+﻿using Ardalis.GuardClauses;
+using FileSystem.Core.Common;
 using FileSystem.Core.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace FileSystem.EF.DbModels;
 
-public partial class FolderDbModel : BaseEntity<int>, IFolder
+public partial class FolderDbModel : ChildFolder, IParentFolder<FolderDbModel>
 {
     public HierarchyId Node { get; set; } = null!;
 
@@ -15,70 +16,65 @@ public partial class FolderDbModel : BaseEntity<int>, IFolder
     public ICollection<FileDbModel> Files { get; set; }
     public bool IsDeleted { get; set; } = false;
 
-    public FolderDbModel(string name)
+    ICollection<FolderDbModel> IParentFolder<FolderDbModel>.Subfolders => throw new NotImplementedException();
+
+    public FolderDbModel()
     {
-        Name = name;
+
+    }
+
+    public FolderDbModel(string folderName)
+    {
+
+        Name = Guard.Against.NullOrWhiteSpace(folderName, nameof(folderName));
         Subfolders = new List<FolderDbModel>();
         Files = new List<FileDbModel>();
     }
-
-    public FolderDbModel(string name, int id)
-        :this(name)
-    {
-        Id = id;
-    }
-
-    public FolderDbModel(string name, FolderDbModel parent)
-        :this(name)
-    {
-        Parent = parent;
-        Node = parent.GetNewChildNode();
-    }
-
     public override string ToString() => $"ID: {Id} Path: {Node}";
 
-    public IFolder AddSubfolder(string name)
+    public new FolderDbModel AddSubfolder(string folderName)
     {
-        var newFolder = new FolderDbModel(name);
+        var newFolder = new FolderDbModel(folderName);
         Subfolders.Add(newFolder);
         return newFolder;
     }
 
-    public void Delete()
+    public override void Delete()
     {
         IsDeleted = true;
-        foreach (var file in Files) {
+        DeleteFiles();
+        DeleteSubFolders();
+    }
+
+    private void DeleteFiles()
+    {
+        foreach (FileDbModel file in Files)
+        {
             file.Delete();
         }
     }
 
-    public void DeleteSubFolderById(int subfolderId) => GetSubFolderById(subfolderId).Delete();
-    
+    private void DeleteSubFolders()
+    {
+        foreach (FolderDbModel folder in Subfolders)
+        { 
+            folder.Delete();
+        }
+    }
 
-    public IFile CreateFile(string fileName)
+    public override IFile CreateFile(string fileName)
     {
         FileDbModel newFile = new(fileName, this);
         Files.Add(newFile);
         return newFile;
     }
 
-    public void DeleteFile(IFile file)
+    public override void DeleteFile(IFile file)
     {
         FileDbModel fileToDelete = Files.FirstOrDefault(f => f.Equals(file));
         fileToDelete?.Delete();
     }
-
-    public void DeleteFileById(int fileId)
-    {
-        FileDbModel fileToDelete = Files.FirstOrDefault(f => f.Id == fileId);
-        fileToDelete?.Delete();
-    }
-
-    private FolderDbModel GetSubFolderById(int id) => Subfolders.Single(sf => sf.Id == id);
-
     private HierarchyId GetNewChildNode() => Node.GetDescendant(GetMaxChildNode(), null);
 
     private HierarchyId? GetMaxChildNode() => Subfolders.Max(sf => sf.Node);
-
-
 }

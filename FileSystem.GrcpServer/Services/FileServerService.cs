@@ -1,4 +1,6 @@
-﻿using FileSystem.Core.Interfaces;
+﻿using FileSystem.API;
+using FileSystem.Core.Common;
+using FileSystem.Core.Interfaces;
 using FileSystem.GrpcServer.ModelExtensions;
 using Grpc.Core;
 
@@ -7,51 +9,48 @@ namespace FileSystem.GrpcServer.Services;
 public class FileServerService : FileServer.FileServerBase
 {
     private readonly ILogger<FileServerService> _logger;
-    private readonly IFileSystemService _fileSystemService;
+    private readonly IFileServerAPIService _fileServerService;
 
-    public FileServerService(ILogger<FileServerService> logger, IFileSystemService fileSystemService)
+    public FileServerService(ILogger<FileServerService> logger, IFileServerAPIService fileServerService)
     {
         _logger = logger;
-        _fileSystemService = fileSystemService;
+        _fileServerService = fileServerService;
     }
 
     public override Task<GetAllReply> GetAll(Empty request, ServerCallContext context)
     {
-        IEnumerable<IFolder> folders = _fileSystemService.GetAll();
 
-        GetAllReply reply = new GetAllReply();
-        reply.Folders.AddRange(folders.Select(x => x.GetFolderReply()));
-
-        return Task.FromResult(reply);
+        return Task.FromResult(new GetAllReply());
     }
 
-    public override Task<Empty> AddFolder(AddRequest request, ServerCallContext context)
+    public override async Task<Empty> AddFolder(AddRequest request, ServerCallContext context)
     {
-        _fileSystemService.Add(request.Name, request.ParentFolderId);
+        await _fileServerService.AddFolderAsync(request.Name, request.ParentFolderId);
 
-        return Task.FromResult(new Empty());
+        return new ();
+
     }
 
-    public override Task<Empty> RemoveFolderById(IdRequest request, ServerCallContext context)
+    public override async Task<Empty> RemoveFolderById(IdRequest request, ServerCallContext context)
     {
-        _fileSystemService.RemoveById(request.Id);
-        return Task.FromResult(new Empty());
+        await _fileServerService.RemoveFolderByIdAsync(request.Id);
+
+        return new ();
     }
 
-    public override Task<FileReply> AddFile(AddRequest request, ServerCallContext context)
+    public override async Task<FileReply> AddFile(AddRequest request, ServerCallContext context)
     {
-        IFile newFile = _fileSystemService.CreateFile(request.Name, request.ParentFolderId);
+        IFile newFile = await _fileServerService.AddFileAsync(request.Name, request.ParentFolderId);
 
-        FileReply reply = newFile.GetFileReply();
+        return newFile.GetFileReply();
 
-        return Task.FromResult(reply);
+        
     }
 
-    public override Task<LookupReply> FileLookup(LookupRequest request, ServerCallContext context)
+    public override async Task<LookupReply> FileLookup(LookupRequest request, ServerCallContext context)
     {
-        IEnumerable<IFile> lookupResult = _fileSystemService.FilesLookup(request.SearchString, request.Page, request.Size);
-        LookupReply reply = new ();
-        reply.Files.AddRange(lookupResult.Select(x => x.GetFileReply()));
-        return Task.FromResult(reply);
+        PaginationResponse<IFile> paginationResponse = await _fileServerService.FileLookupAsync(request.GetPaginationRequest());
+
+        return paginationResponse.GetResponse();
     }
 }

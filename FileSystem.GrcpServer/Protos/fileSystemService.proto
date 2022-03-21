@@ -32,7 +32,6 @@ message FolderReply {
 message FileReply {
 	int32 id = 1;
 	string name = 2;
-	int32 parentFolderId = 3;
 }
 
 message Empty{}
@@ -49,4 +48,8 @@ message LookupRequest {
 
 message LookupReply {
 	repeated FileReply files = 1;
+	int32 pageNumber = 2;
+	int32 pageSize = 3;
+	int32 totalCount = 4;
+	int32 FilteredCount = 5;
 }
