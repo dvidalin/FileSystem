@@ -44,11 +44,25 @@ public partial class FolderDbModel : Folder, IParentFolder, IFolder
 
     public override void Delete()
     {
-        if (Node == HierarchyId.GetRoot())
-            throw new CantDeleteRootNodeException();
-
         IsDeleted = true;
-        base.Delete();
+        DeleteFiles();
+        DeleteSubfolders(); 
+    }
+
+    protected override void DeleteFiles()
+    {
+        foreach (var file in Files)
+        {
+            file.Delete();
+        }
+    }
+
+    protected override void DeleteSubfolders()
+    {
+        foreach (var folder in Subfolders)
+        {
+            folder.Delete();
+        }
     }
 
     public override FileDbModel CreateFile(string fileName)

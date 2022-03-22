@@ -19,17 +19,9 @@ public class FileServerService : FileServer.FileServerBase
 
     public override async Task<IdMessage> AddFolder(AddRequest request, ServerCallContext context)
     {
-        try
-        {
-            int newFolderId = await _fileServerService.AddFolderAsync(request.Name, request.ParentFolderId);
+        int newFolderId = await _fileServerService.AddFolderAsync(request.Name, request.ParentFolderId);
 
-            return new() { Id = newFolderId };
-        }
-        catch (Exception ex) {
-            var t = 5;
-        }
-
-        throw new NotImplementedException();
+        return new() { Id = newFolderId };
     }
 
     public override async Task<Empty> RemoveFolderById(IdMessage request, ServerCallContext context)

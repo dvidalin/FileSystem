@@ -10,5 +10,5 @@ public class FileModel : BaseEntity<int>, IFile
         Name = Guard.Against.InvalidCharacter(fileName, nameof(fileName));
     }
 
-    public virtual void Delete() => throw new NotImplementedException();
+    public virtual void Delete() { }
 }

@@ -8,7 +8,7 @@ public class Folder : BaseEntity<int>, IParentFolder, IFolder
     public ICollection<Folder> Subfolders { get; set; } = new List<Folder>();
     public ICollection<FileModel> Files { get; set; } = new List<FileModel>();
 
-    protected Folder(string folderName) : base(folderName)
+    public Folder(string folderName) : base(folderName)
     {        
         Name = Guard.Against.InvalidCharacter(folderName, nameof(folderName));
     }
@@ -47,21 +47,20 @@ public class Folder : BaseEntity<int>, IParentFolder, IFolder
         file.Delete();
     }
 
-    public ICollection<FileModel> GetFiles() => throw new NotImplementedException();
-    public virtual ICollection<Folder> GetSubfolders() => throw new NotImplementedException();
-
-    protected void DeleteSubfolders()
+    protected virtual void DeleteSubfolders()
     {
         foreach (Folder folder in Subfolders)
         {
+            Subfolders.Remove(folder);
             folder.Delete();
         }
     }
 
-    protected void DeleteFiles()
+    protected virtual void DeleteFiles()
     {
         foreach (FileModel file in Files)
         {
+            Files.Remove(file);
             file.Delete();
         }
     }
