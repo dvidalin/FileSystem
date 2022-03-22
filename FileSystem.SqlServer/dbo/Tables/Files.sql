@@ -5,8 +5,8 @@
 	[ParentFolderId]		INT NOT NULL,
 
 	[IsDeleted]		BIT NOT NULL DEFAULT 0,
-	[DateCreated]	DATETIME NOT NULL,
-	[DateModified]	DATETIME NOT NULL,
+	[DateCreated]	DATETIME2 NOT NULL,
+	[DateModified]	DATETIME2 NOT NULL,
 
 	CONSTRAINT PK_Files PRIMARY KEY NONCLUSTERED ([Id]),
 	CONSTRAINT FK_Files_Folder FOREIGN KEY ([ParentFolderId])

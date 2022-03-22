@@ -1,24 +1,19 @@
 ﻿using FileSystem.Core.Common;
+using FileSystem.Core.FileSystem.Models;
 using FileSystem.Core.Interfaces;
 
 namespace FileSystem.EF.DbModels;
 
-public partial class FileDbModel : BaseEntity<int>, IFile, ISoftDeleteEntity, IChangeHistoryEntity
+public partial class FileDbModel : FileModel, IFile, ISoftDeleteEntity, IChangeHistoryEntity
 {
     public int ParentFolderId { get; set; }
     public FolderDbModel ParentFolder { get; set; } = null!;
     public bool IsDeleted { get; set; } = false;
-    public DateTime DateCreated { get; set; } = DateTime.Now;
-    public DateTime DateModified { get; set; } = DateTime.Now;
+    public DateTime DateCreated { get; set; } = DateTime.UtcNow;
+    public DateTime DateModified { get; set; } 
 
-    public FileDbModel()
-    {
-
-    }
-
-    private FileDbModel(string name)
+    private FileDbModel(string name) : base(name)
     { 
-        Name = name;
     }
 
     public FileDbModel(string name, FolderDbModel parentFolder)
@@ -26,14 +21,11 @@ public partial class FileDbModel : BaseEntity<int>, IFile, ISoftDeleteEntity, IC
     {
         ParentFolder = parentFolder;
     }
-
-    public FileDbModel(string name, int parentFolderId)
-        :this(name)
-    {
-        ParentFolderId = parentFolderId;
-    }
-
     public override string ToString() => $"{Name}";
 
-    public void Delete() => IsDeleted = true;
+    public override void Delete()
+    { 
+        IsDeleted = true;
+        DateModified = DateTime.UtcNow;
+    }
 }

@@ -20,11 +20,7 @@ public static class FileSystemServiceExtensions
         };
 
     public static PaginationRequest GetPaginationRequest(this LookupRequest request)
-        => new() {
-            SearchString = request.SearchString,
-            PageNumber = request.Page,
-            PageSize = request.Size
-        };
+        => new(request.SearchString, request.Page, request.Size);
 
     public static LookupReply GetResponse(this PaginationResponse<IFile> response)
     {

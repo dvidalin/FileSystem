@@ -1,7 +1,12 @@
-﻿namespace FileSystem.Core.Interfaces;
-public interface IParentFolder<TFolder> : IFolder
-    where TFolder : IFolder
+﻿using FileSystem.Core.FileSystem.Models;
+
+namespace FileSystem.Core.Interfaces;
+public interface IParentFolder : IFolder
 {
-    ICollection<TFolder> Subfolders { get; }
+    ICollection<Folder> GetSubfolders();
+    ICollection<FileModel> GetFiles();
+    FileModel CreateFile(string fileName);
+    void DeleteFile(FileModel file);
+    Folder AddSubfolder(string name);
 
 }

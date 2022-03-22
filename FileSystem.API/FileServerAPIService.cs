@@ -14,7 +14,8 @@ public class FileServerAPIService : IFileServerAPIService
         _fileServerRepository = fileServerRepository;
     }
 
-    public async Task<int> AddFileAsync(string fileName, int parentFolderId) { 
+    public async Task<int> AddFileAsync(string fileName, int parentFolderId)
+    {
         var parentFolder = await _fileServerRepository.GetFolderByIdAsync(parentFolderId);
 
         var newFile = parentFolder.CreateFile(fileName);

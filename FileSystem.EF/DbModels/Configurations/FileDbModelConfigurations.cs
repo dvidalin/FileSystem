@@ -9,7 +9,7 @@ public class FileDbModelConfigurations : IEntityTypeConfiguration<FileDbModel>
     {
         builder.ToTable("Files");
 
-        builder.HasKey(x => x.Id);
+        //builder.HasKey(x => x.Id);
 
         builder.Property(x => x.Id)
             .ValueGeneratedOnAdd();
@@ -20,7 +20,7 @@ public class FileDbModelConfigurations : IEntityTypeConfiguration<FileDbModel>
 
         
 
-        SetQueryFilters(builder);
+        //SetQueryFilters(builder);
     }
 
     private void SetQueryFilters(EntityTypeBuilder<FileDbModel> builder)

@@ -17,8 +17,8 @@ var client = new FileServer.FileServerClient(channel);
 
 for (int i = 1; i <= 5; i++)
 {
-    var newFolder = await client.AddFileAsync(new AddRequest { Name = "Testni file", ParentFolderId = 1 });
-
+    await client.AddFolderAsync(new AddRequest { Name = "Novi Folder", ParentFolderId = 1 });
+    await client.AddFileAsync(new AddRequest { Name = "Novi File", ParentFolderId = 1 });
 }
 
 
