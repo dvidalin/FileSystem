@@ -12,3 +12,4 @@
 	CONSTRAINT FK_Files_Folder FOREIGN KEY ([ParentFolderId])
 				REFERENCES [dbo].[Folders] ([Id])
 )
+

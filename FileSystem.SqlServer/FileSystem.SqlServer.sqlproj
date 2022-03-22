@@ -65,4 +65,7 @@
     <Build Include="dbo\Tables\Folders.sql" />
     <Build Include="dbo\Tables\Files.sql" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="RootFolderSeed.sql" />
+  </ItemGroup>
 </Project>

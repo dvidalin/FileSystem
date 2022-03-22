@@ -1,7 +1,8 @@
 ﻿using FileSystem.GrpcServer;
 using Grpc.Net.Client;
 
-var channel = GrpcChannel.ForAddress("http://localhost:5098");
+//var channel = GrpcChannel.ForAddress("http://localhost:5098"); //iis
+var channel = GrpcChannel.ForAddress("http://localhost:5001"); //docker
 
 var client = new FileServer.FileServerClient(channel);
 
