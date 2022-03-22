@@ -4,7 +4,7 @@ using FileSystem.Core.Interfaces;
 
 namespace FileSystem.EF.DbModels;
 
-public partial class FileDbModel : FileModel, IFile, ISoftDeleteEntity, IChangeHistoryEntity
+public partial class FileDbModel : FileModel, IFile
 {
     public int ParentFolderId { get; set; }
     public FolderDbModel ParentFolder { get; set; } = null!;

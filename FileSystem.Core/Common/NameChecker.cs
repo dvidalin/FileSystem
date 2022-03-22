@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace FileSystem.Core.Common;
+﻿namespace FileSystem.Core.Common;
 public class NameChecker 
 {
     private const string SUFFIX_BASE = "- Copy";

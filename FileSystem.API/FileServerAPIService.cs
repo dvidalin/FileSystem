@@ -1,8 +1,6 @@
 ﻿using FileSystem.Core.FileSystem.Interfaces;
 using FileSystem.Core.Interfaces;
-using Ardalis.GuardClauses;
 using FileSystem.Core.Common;
-using FileSystem.EF.DbModels;
 
 namespace FileSystem.API;
 public class FileServerAPIService : IFileServerAPIService
