@@ -5,7 +5,6 @@ option csharp_namespace = "FileSystem.GrpcServer";
 package fileserver;
 
 service FileServer {
-	rpc GetAll(Empty) returns (GetAllReply);
 	rpc AddFolder(AddRequest) returns (IdMessage);
 	rpc RemoveFolderById(IdMessage) returns (Empty);
 	rpc AddFile(AddRequest) returns (IdMessage);

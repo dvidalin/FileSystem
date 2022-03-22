@@ -5,14 +5,13 @@ option csharp_namespace = "FileSystem.GrpcServer";
 package fileserver;
 
 service FileServer {
-	rpc GetAll(Empty) returns (GetAllReply);
-	rpc AddFolder(AddRequest) returns (Empty);
-	rpc RemoveFolderById(IdRequest) returns (Empty);
-	rpc AddFile(AddRequest) returns (FileReply);
+	rpc AddFolder(AddRequest) returns (IdMessage);
+	rpc RemoveFolderById(IdMessage) returns (Empty);
+	rpc AddFile(AddRequest) returns (IdMessage);
 	rpc FileLookup(LookupRequest) returns (LookupReply);
 }
 
-message IdRequest {
+message IdMessage{
 	int32 id = 1;
 }
 
@@ -32,7 +31,6 @@ message FolderReply {
 message FileReply {
 	int32 id = 1;
 	string name = 2;
-	int32 parentFolderId = 3;
 }
 
 message Empty{}
@@ -49,4 +47,8 @@ message LookupRequest {
 
 message LookupReply {
 	repeated FileReply files = 1;
+	int32 pageNumber = 2;
+	int32 pageSize = 3;
+	int32 totalCount = 4;
+	int32 FilteredCount = 5;
 }

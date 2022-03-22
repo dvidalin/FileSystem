@@ -1,4 +1,5 @@
 ﻿using FileSystem.Core.Common;
+using FileSystem.Core.Exceptions;
 using FileSystem.Core.FileSystem.Interfaces;
 using FileSystem.Core.Interfaces;
 using FileSystem.EF.DbModels;
@@ -24,8 +25,8 @@ public class FileServerRepository : IFileServerRepository
         return file.Id;
     }
     public async Task<int> AddFolderAsync(IFolder folder)
-    { 
-        _dbContext.Folders.Add((FolderDbModel)folder); 
+    {
+        _dbContext.Folders.Add((FolderDbModel)folder);
 
         await _dbContext.SaveChangesAsync();
 
@@ -34,7 +35,7 @@ public class FileServerRepository : IFileServerRepository
 
     public async Task<IEnumerable<IFolder>> GetAllAsync()
         => await _dbContext.Folders.ToListAsync();
-    public async Task<IFile> GetFileByIdAsync(int fileId)     
+    public async Task<IFile> GetFileByIdAsync(int fileId)
         => await _dbContext
                     .FilesQuery()
                     .ById(fileId)
@@ -57,7 +58,8 @@ public class FileServerRepository : IFileServerRepository
 
 
         }
-        catch (Exception ex) {
+        catch (Exception ex)
+        {
             var t = 5;
         }
 
@@ -71,24 +73,46 @@ public class FileServerRepository : IFileServerRepository
                     .ById(folderId)
                     .WithAllRelations()
                     .SingleAsync();
-    public async Task<IFolder> GetFolderWithDeletedChildredByIdAsync(int folderId) 
+    public async Task<IFolder> GetFolderWithDeletedChildredByIdAsync(int folderId)
         => await _dbContext
                     .FoldersQuery()
                     .IgnoreQueryFilters()
                     .Where(f => !f.IsDeleted)
-                    .ById(folderId)                    
+                    .ById(folderId)
                     .WithAllRelations()
                     .SingleAsync();
     public async Task UpdateFileAsync(IFile item)
-    { 
+    {
         _dbContext.Entry(item).State = EntityState.Modified;
         await _dbContext.SaveChangesAsync();
     }
 
     public async Task UpdateFolderAsync(IFolder folder)
-    { 
+    {
         _dbContext.Entry(folder).State = EntityState.Modified;
         await _dbContext.SaveChangesAsync();
     }
 
+    public async Task RemoveFolderWithChildrenAsync(int folderId)
+    {
+   
+        var folderToRemove = await _dbContext.Folders.Where(f => f.Id == folderId).SingleAsync();
+
+        if (folderToRemove.Node == HierarchyId.GetRoot())
+            throw new CantDeleteRootNodeException();
+
+        var descendats = await _dbContext
+                                .Folders
+                                .Where(x => x.Node.IsDescendantOf(folderToRemove.Node))
+                                .Include(x => x.Files)
+                                .ToListAsync();
+
+        foreach (var descendat in descendats)
+        { 
+            descendat.Delete();
+        }
+
+        await _dbContext.SaveChangesAsync();
+        
+    }
 }

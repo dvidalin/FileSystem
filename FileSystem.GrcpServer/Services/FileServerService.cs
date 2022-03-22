@@ -17,12 +17,6 @@ public class FileServerService : FileServer.FileServerBase
         _fileServerService = fileServerService;
     }
 
-    public override Task<GetAllReply> GetAll(Empty request, ServerCallContext context)
-    {
-
-        return Task.FromResult(new GetAllReply());
-    }
-
     public override async Task<IdMessage> AddFolder(AddRequest request, ServerCallContext context)
     {
         int newFolderId = await _fileServerService.AddFolderAsync(request.Name, request.ParentFolderId);

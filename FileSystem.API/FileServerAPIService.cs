@@ -45,13 +45,5 @@ public class FileServerAPIService : IFileServerAPIService
 
         await _fileServerRepository.UpdateFileAsync(fileToRemove);
     }
-    public async Task RemoveFolderByIdAsync(int folderId)
-    {
-        var folderToRemove = await _fileServerRepository.GetFolderByIdAsync(folderId);
-        
-        folderToRemove.Delete();
-
-        await _fileServerRepository.UpdateFolderAsync(folderToRemove);
-
-    }
+    public async Task RemoveFolderByIdAsync(int folderId) => await _fileServerRepository.RemoveFolderWithChildrenAsync(folderId);
 }

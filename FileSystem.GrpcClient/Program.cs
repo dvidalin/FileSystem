@@ -12,14 +12,14 @@ var client = new FileServer.FileServerClient(channel);
 //var t = await client.FileLookupAsync(new LookupRequest { SearchString = "Moj", Page = 1, Size = 10 });
 //}
 
-await client.AddFolderAsync(new AddRequest { Name = "Folder iz novi novi", ParentFolderId = 1 });
 
 
-//for (var i = 0; i < 20; i++)
-//{
-//    await client.AddFileAsync(new AddRequest { Name = $"File iz klijenta {i}", ParentFolderId = 3 });
 
-//}
+for (int i = 1; i <= 5; i++)
+{
+    var newFolder = await client.AddFileAsync(new AddRequest { Name = "Testni file", ParentFolderId = 1 });
+
+}
 
 
 Console.WriteLine("Done!!!");

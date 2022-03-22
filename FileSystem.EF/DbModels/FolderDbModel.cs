@@ -16,8 +16,6 @@ public partial class FolderDbModel : ChildFolder, IParentFolder<FolderDbModel>
     public ICollection<FileDbModel> Files { get; set; }
     public bool IsDeleted { get; set; } = false;
 
-    ICollection<FolderDbModel> IParentFolder<FolderDbModel>.Subfolders => throw new NotImplementedException();
-
     public FolderDbModel()
     {
         Subfolders = new List<FolderDbModel>();
@@ -33,8 +31,12 @@ public partial class FolderDbModel : ChildFolder, IParentFolder<FolderDbModel>
 
     public override FolderDbModel AddSubfolder(string folderName)
     {
+        List<string> existingNames = Subfolders.Select(sf => sf.Name).ToList();
+
+        string newName = NameChecker.GetAvailableName(folderName, existingNames);
+
         HierarchyId newNode = GetNewChildNode();
-        var newFolder = new FolderDbModel(folderName, newNode);
+        var newFolder = new FolderDbModel(newName, newNode);
         
         Subfolders.Add(newFolder);
         return newFolder;
@@ -65,7 +67,10 @@ public partial class FolderDbModel : ChildFolder, IParentFolder<FolderDbModel>
 
     public override FileDbModel CreateFile(string fileName)
     {
-        FileDbModel newFile = new(fileName, this);
+        List<string> existingNames = Files.Select(f => f.Name).ToList();
+        string newName = NameChecker.GetAvailableName(fileName, existingNames);
+
+        FileDbModel newFile = new(newName, this);
         Files.Add(newFile);
         return newFile;
     }

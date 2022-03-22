@@ -2,6 +2,5 @@
 
 public interface IFile : IBaseEntity<int>
 {
-    int ParentFolderId { get; set; }
     void Delete();
 }

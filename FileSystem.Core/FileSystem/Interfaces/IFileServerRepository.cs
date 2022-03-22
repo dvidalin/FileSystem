@@ -13,7 +13,7 @@ public interface IFileServerRepository
     Task UpdateFolderAsync(IFolder folder);
     Task UpdateFileAsync(IFile item);
     Task<IFile> GetFileByIdAsync(int fileId);
-
+    Task RemoveFolderWithChildrenAsync(int folderId);
 
 
 }
